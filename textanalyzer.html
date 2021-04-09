@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .container{
+            margin: 0 auto;
+            display: flex;
+        }
+        .btn{
+            min-width: 40px;
+            height: 42px;
+            margin: 30px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-control{
+            width: 500px;
+        }
+        .result_container{
+            display: flex;
+            flex-direction: column;
+        }
+        .result{
+            align-self: center;
+        }
+        h4{
+           padding-left: 40px;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        let inputText2;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            let string = `Ася Щёголь — vk.com/id254`;
+            inputText2 = document.querySelector("#InputText").value;
+            console.log(string);
+            document.getElementById("example").innerHTML = `Например, <a href=# onclick="examplePaste()">${string}</a>`;
+        });
+
+
+
+        function getText() {
+            let inputText = document.querySelector("#InputText").value.split("/n");
+            let linkAndText = [];
+            let result;
+            let resultContainer;
+            let resultTitle;
+            /* Result */
+            resultContainer = document.createElement("div");
+            resultContainer.className = "result_container";
+            document.body.append(resultContainer);
+            resultTitle = document.createElement("h4");
+            resultTitle.innerHTML = "Результат";
+            resultContainer.appendChild(resultTitle);
+            /* Input processing */
+            if (inputText) {
+                inputText.forEach(phrase => {
+                linkAndText = phrase.split(" — ");
+                    console.log(linkAndText[0]);
+                    result = document.createElement("div");
+                result.className = "result";
+                if (linkAndText[1] && linkAndText[0]) {
+                result.innerHTML+=`[${linkAndText[1]}|${linkAndText[0]}]`
+                    } else {
+                    result.innerHTML = "Error"
+                }
+                resultContainer.appendChild(result);
+                });
+
+            }
+        }
+
+        function examplePaste() {
+            document.querySelector("#InputText").value = `Ася Щёголь — vk.com/id254`;
+            document.querySelector("#resultExample").value = `[vk.com/id254|Ася Щёголь]`;
+        }
+
+
+    </script>
+</head>
+<body>
+ <div class="container">
+     <div class="form-group">
+         <label for="InputText">Текст</label>
+         <textarea type="text" class="form-control" id="InputText" placeholder="Введите текст в формате «Текст — ссылка»." rows="10"></textarea>
+         <div id="example"></div>
+         <textarea type="text" class="form-control" id="resultExample" placeholder="Результат" rows="1"></textarea>
+     </div>
+     <button type="submit" class="btn btn-primary" onclick="getText()">Обработать</button>
+
+ </div>
+</body>
+</html>
